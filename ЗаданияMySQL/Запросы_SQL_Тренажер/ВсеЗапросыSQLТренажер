@@ -1,0 +1,63 @@
+2.1 Базовый синтаксис SQL запроса
+SELECT name FROM Passenger;
+SELECT member_id, member_name ,status FROM FamilyMembers;
+SELECT * FROM Payments;
+SELECT DISTINCT name FROM Passenger
+2.2 Условный оператор WHERE
+SELECT good FROM Payments WHERE unit_price > 2000;ount 
+SELECT member_name FROM FamilyMembers WHERE status="father";
+SELECT member_name,birthday FROM FamilyMembers
+WHERE status IN ('father', 'mother');
+SELECT room_id,start_date,end_date FROM Reservations WHERE total BETWEEN 500 AND 1200;
+SELECT member_name FROM FamilyMembers WHERE member_name LIKE '% Quincey';
+
+2.3 Сортировка, оператор ORDER BY
+SELECT good, amount * unit_price AS sum FROM payments ORDER BY sum DESC;
+SELECT * FROM FamilyMembers WHERE member_name LIKE '%Quincey%' ORDER BY status, member_name;
+
+2.4 Группировка, агрегатные функции
+SELECT class, count(student) AS count FROM Student_in_class GROUP BY class ORDER BY count DESC;
+SELECT status, MIN(birthday) as birthday FROM FamilyMembers GROUP BY status;
+SELECT plane, AVG(TIMESTAMPDIFF(second, time_out, time_in)) as time FROM Trip GROUP BY plane;
+SELECT room_id,AVG(price) as avg_price,count(total) as count FROM Reservations GROUP BY room_id ORDER BY count DESC, avg_price DESC;
+SELECT room_id,AVG(price) as avg_price,count(total) as count FROM Reservations GROUP BY room_id HAVING avg_price > 150 ORDER BY count DESC, avg_price DESC;
+
+2.5 Многотабличные запросы
+SELECT Class.name , Student_in_class.student FROM Class INNER JOIN Student_in_class ON Class.id  = Student_in_class.class;
+SELECT Class.name , Student.first_name FROM Class INNER JOIN Student_in_class ON Class.id  = Student_in_class.class INNER JOIN Student ON Student.id = Student_in_class.student;
+SELECT good_name FROM Goods INNER JOIN  Payments ON  good_id = good INNER JOIN FamilyMembers ON family_member = member_id WHERE FamilyMembers.status = 'son' ;
+SELECT room_id, AVG(rating) AS avg_score FROM Reviews INNER JOIN Reservations ON reservation_id = Reservations.id GROUP BY room_id;
+
+2.6 Ограничение выборки, оператор LIMIT
+SELECT * FROM Company ORDER BY name LIMIT 2;
+SELECT start_pair,end_pair FROM Timepair LIMIT 1,2;
+
+2.7 Вложенные запросы
+SELECT name , (SELECT count(trip) as Pass_in_trip FROM Pass_in_trip WHERE Pass_in_trip.passenger = Passenger.id) as count FROM Passenger; 
+SELECT good_name FROM Goods WHERE good_id NOT IN(SELECT good FROM Payments);
+SELECT * FROM Rooms WHERE (has_tv, has_internet, has_kitchen, has_air_con) = (SELECT has_tv, has_internet, has_kitchen, has_air_con FROM Rooms WHERE id = 11);
+
+2.8 Объединение запросов, оператор UNION
+WITH report AS (SELECT member_name, STATUS, good_name, amount*unit_price AS costs
+FROM Payments 
+    JOIN FamilyMembers ON family_member = member_id
+    JOIN goods ON good = good_id
+    WHERE MONTH(DATE) IN (07,08,09)
+    )
+ 
+SELECT * FROM report
+UNION 
+SELECT NULL,
+NULL,
+"Total:",
+(SELECT SUM(costs) FROM report) FROM report
+ORDER BY CASE WHEN member_name IS NULL THEN 1 ELSE 0 END,member_name, costs DESC
+5.1 Типы данных
+SELECT UPPER(member_name) as name FROM FamilyMembers;
+SELECT LPAD(good_id,2,0) as ids FROM Goods;
+SELECT  SUBSTRING (member_name,1, LOCATE(' ', member_name)-1)  as firstName FROM FamilyMembers
+
+
+5.2 Числовой тип данных
+SELECT room_id, CEIL(AVG (price)) AS avg_price FROM Reservations GROUP BY room_id HAVING COUNT(*) > 0;
+SELECT room_id,COUNT(total) AS COUNT FROM Reservations GROUP BY room_id HAVING MOD(COUNT, 2) > 0

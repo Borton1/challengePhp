@@ -1,0 +1,6 @@
+SELECT class, count(student) AS count FROM Student_in_class GROUP BY class ORDER BY count DESC;
+SELECT status, MIN(birthday) as birthday FROM FamilyMembers GROUP BY status;
+SELECT plane, AVG(TIMESTAMPDIFF(second, time_out, time_in)) as time FROM Trip GROUP BY plane;
+SELECT room_id,AVG(price) as avg_price,count(total) as count FROM Reservations GROUP BY room_id ORDER BY count DESC, avg_price DESC;
+SELECT room_id,AVG(price) as avg_price,count(total) as count FROM Reservations GROUP BY room_id HAVING avg_price > 150 ORDER BY count DESC, avg_price DESC;
+https://sql-academy.org/ru/guide/groupping-aggregate-functions

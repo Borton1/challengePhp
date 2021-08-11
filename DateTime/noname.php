@@ -16,3 +16,10 @@ var_dump(subs_offset_apply($string , $offset));
 string = "01:09:02,684 --> 01:09:03,601 Run Forrest, run!"  
 subs_offset_apply(string, 3663655)
 output: "02:10:06,339 --> 02:10:07,256 Run Forrest, run!"
+
+function count_smileys($arr): int {
+$pattern = '/[:;][\-\~]*[)D]/gm';
+$string = implode(" ", $arr);
+preg_match($pattern , $string , $matches);
+return count($matches);
+}
