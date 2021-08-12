@@ -10,18 +10,23 @@ all tests are passed
 */
 <?php
 function getLengthOfMissingArray($arrayOfArrays) {
-        if(empty($arrayOfArrays)) return 0;
-    for($i=0; $i < count($arrayOfArrays); $i++){
-        if(empty($arrayOfArrays[$i])){
-            return 0;
-        }else{
-            $arr_numbers[] = count($arrayOfArrays[$i]);
-        } 
+  if (empty($arrayOfArrays)) {
+     return 0;
+  }
+  
+  $arr_numbers = [];
+  
+  foreach ($arrayOfArrays as $item) {
+     if (empty($item)) {
+          return 0;
+      }
+      $arr_numbers[] = count($item);
+  }
+
+  sort($arr_numbers);
+  foreach ($arr_numbers as $key => $item) {
+    if ($key+1 !== $item) {
+      return $key+1;
     }
-    sort($arr_numbers);
-    for($i=0; $i < count($arr_numbers); $i++){
-        if($arr_numbers[$i]+1 != $arr_numbers[$i+1]){
-            return $arr_numbers[$i]+1;
-        }
-    }
+  }
 }

@@ -1,5 +1,5 @@
 https://www.codewars.com/kata/52685f7382004e774f0001f7/train/php
-function human_readable($number) {
+function humanReadable($number) {
     if($number < 0) 
     {
         return 0;
@@ -15,11 +15,11 @@ function human_readable($number) {
             $hours = "0".$hours;
         }
         $seconds = $number - $minutes * 60;
-        $str_time = date("i:s", mktime(0,$minutes,$seconds));
-        $arr_time = explode(":" , $str_time);
-        array_unshift($arr_time , $hours);
-        $arr_time = implode(":",$arr_time);
-        return $arr_time;
+        $strTime = date("i:s", mktime(0,$minutes,$seconds));
+        $arrTime = explode(":" , $strTime);
+        array_unshift($arrTime , $hours);
+        $arrTime = implode(":",$arrTime);
+        return $arrTime;
     }else{
         return 0;
     }
