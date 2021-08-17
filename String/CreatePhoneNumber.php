@@ -25,3 +25,9 @@ function createPhoneNumber($numbersArray) {
         
     }
 }
+
+---------------------Исправлено-----------------------
+function createPhoneNumber($numbersArray) {
+  if(count($numbersArray) == 10) return vsprintf("(%d%d%d) %d%d%d-%d%d%d%d",$numbersArray);
+    return 0;
+}
