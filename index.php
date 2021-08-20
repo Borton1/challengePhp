@@ -6,7 +6,7 @@ preg_match_all('/00*\d:00*\d:00*\d,\d{3}/', $string, $matches);
 // $matches[0][0] - 1 время
 //$matches[0][1]  - 2 время
 $r = '01:09:02.684';
-$l = '01:09:02.684';
+$l = '01:09:05.684';
 $firstTime  = new DateTime($r);
 $secondTime = new DateTime($l);
 $diff = $secondTime->diff($firstTime)->format("%h:%i:%s:%v");	
@@ -28,3 +28,5 @@ echo $diff;
 // $string     = $oneTime.' --> '.$secondTime." Run Forrest, run!";
 // echo $string;
 echo PHP_EOL;
+
+#\b\pL[^.?!]++[.?!]*+#
